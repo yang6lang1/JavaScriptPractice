@@ -281,6 +281,35 @@ var Quo2 = function(status){
 };
 var myQuo2 = Quo2("amazed");
 document.writeln(myQuo2.get_status());
-document.writeln();
+var myQuo3 = Quo2("somethingelse");
+document.writeln(myQuo3.get_status());
+document.writeln(myQuo2.get_status());
 
+
+//define a function that sets a Dom nodes's color
+//to yellow and then fades it to white.
+var fade = function(node){
+	var level = 0;
+	var change = 1;
+	var step = function(){
+		var hex = level.toString(16); //Integer.toString(radix)
+		if(level < 16){
+			node.style.backgroundColor = '#FFFF0' +hex;	
+		}
+		else{
+			node.style.backgroundColor = '#FFFF' +hex;
+		}
+		if(level<255){
+			level += change;
+			if(level >= 254 || level <= 0){
+				change = -change;
+			}
+			setTimeout(step,50);//wait for 100ms then run step
+		}
+	};
+	setTimeout(step, 50);//first time calling step
+}
+
+fade(document.body);
+document.writeln();
 
