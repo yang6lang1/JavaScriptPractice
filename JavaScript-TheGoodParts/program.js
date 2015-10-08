@@ -290,7 +290,7 @@ document.writeln(myQuo2.get_status());
 //to yellow and then fades it to white.
 var fade = function(node){
 	var level = 0;
-	var change = 1;
+	var change = 2;
 	var step = function(){
 		var hex = level.toString(16); //Integer.toString(radix)
 		if(level < 16){
@@ -311,5 +311,20 @@ var fade = function(node){
 }
 
 fade(document.body);
-document.writeln();
 
+//Make a function that assigns event handler functions to an array
+//of nodes
+//when a node is clicked, an alert box will display the ordinal of node
+var add_the_handlers = function(nodes){
+	var i;
+	for(i = 0; i < nodes.length; i++){
+		nodes[i].onclick = function(i){
+			return function(){
+				alert(i);
+			}
+		}(i);
+	}
+};
+add_the_handlers([document.body]);
+
+document.writeln();
