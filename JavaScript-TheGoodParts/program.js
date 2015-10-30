@@ -398,6 +398,75 @@ document.writeln();
 
 
 
+//Curry:
+//Currying allows us to profuce a new function by combining a function
+//and an argument
+Function.method('curry',function(){
+	//arguments is an Array-like object but not exactly an array object
+	//so it does not have 'concat' method
+	var slice = Array.prototype.slice,
+	args = slice.apply(arguments),
+	that = this;
+	return function(){
+		return that.apply(null, args.concat(slice.apply(arguments)));
+	};
+});
+
+var add1 = add.curry(1);
+document.writeln(add1(6));
+document.writeln();
 
 
+
+//***Memoization***
+//Functions can use objects to remember the results of previous
+//operations (like cache), making it possible to avoid unnecessary work.
+//Example: memoized version of fibonacci number
+var fibonacci = function(){
+	var memo = [0,1];
+	var fib = function(n){
+		var result = memo[n];
+		if(typeof result != 'number'){
+			result = fib(n-1) + fib(n-2);
+			memo[n] = result;
+		}
+		return result;
+	};
+	return fib;
+}();
+for(var k = 0; k <= 10; k++){
+	document.writeln(fibonacci(k));
+}
+
+//alternative way: applicable to other situation
+//input:
+//-	memo: memoizer array
+//-	funcdamental: fundamental function
+var memoizer = function(memo, fundamental){
+	var shell = function(n){
+		var result = memo[n];
+		if(typeof result !== 'number'){ 
+			//assume number is the result of the fundamental function
+			result = fundamental(shell, n);
+			memo[n] = result;
+		}
+		return result;
+	};
+	return shell;
+};
+var fibonacci2 = memoizer([0, 1], function(shell, n){
+	return shell(n-1) + shell(n-2);
+});
+document.writeln("another fibonacci");
+for(var k = 0; k <= 10; k++){
+	document.writeln(fibonacci2(k));
+}
+
+var factorial2 = memoizer([1, 1], function(shell, n){
+	return n * shell(n-1);
+});
+document.writeln("factorial");
+for(var k = 0; k <= 10; k++){
+	document.writeln(factorial2(k));
+}
 
