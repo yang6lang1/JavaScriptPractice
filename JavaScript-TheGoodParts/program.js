@@ -357,3 +357,47 @@ String.method('deentityify',function(){
 	};
 }());
 document.writeln('&lt;&quot;&gt;'.deentityify());
+
+//Make an object that produces a serial number
+var serial_maker = function(){
+	//produce an object that produces unique strings. A
+	//unique string is made up of two parts: a prefix
+	//and a sequence number. The object comes with
+	//methods for setting the prefix and sequence
+	//number, and a gensym method that produces unique
+	//strings
+	var prefix = '';
+	var seq = 0;
+	return{
+		set_prefix : function(p){
+			prefix = String(p);
+		},
+		set_seq : function(s){
+			seq = s;
+		},
+		gensym : function(){
+			var result = prefix + seq;
+			seq += 1;
+			return result;
+		}
+	};
+};
+
+var seqer = serial_maker();
+seqer.set_prefix('Q');
+seqer.set_seq(1000);
+var unique = seqer.gensym();
+document.writeln(unique);
+document.writeln(seqer.gensym());
+document.writeln(seqer.gensym());
+document.writeln(seqer.gensym());
+// if we passed seqer.gensym to a third party's function, that function
+// would be able to generate unique strings, but would be unable to 
+// change the prefix or seq
+document.writeln();
+
+
+
+
+
+
