@@ -3,6 +3,7 @@ document.writeln('Hello World!');
 Function.prototype.method = function (name, func) {
 	if(!this.prototype[name]){
 		this.prototype[name] = func;
+		return this;
 	}
 };
 
@@ -469,4 +470,54 @@ document.writeln("factorial");
 for(var k = 0; k <= 10; k++){
 	document.writeln(factorial2(k));
 }
+document.writeln();
+
+
+
+//Chapter 5: - Inheritance -
+//define a constructor and augment its prototype:
+var Mammal = function(name){
+	this.name = name;
+};
+Mammal.prototype.get_name=function(){
+	return this.name;
+};
+Mammal.prototype.says = function(){
+	return this.saying || '';
+};
+
+var myMammal = new Mammal('Herb the Mammal');
+var name = myMammal.get_name();
+document.writeln(name);
+
+//We can make another pseudoclass that inherits from Mammal by defining
+//its constructor function and replacing its prototype with an instance
+//of Mammal
+var Cat = function(name){
+	this.name = name;
+	this.saying = 'meow';
+};
+
+//Replace Cat.prototype with a new instance of Mammal
+Cat.prototype = new Mammal(); //this is ugly?
+Cat.prototype.purr = function(n){
+	var i, s = '';
+	for(i = 0; i < n; i++){
+		if(s){
+			s += '-';
+		}
+		s += 'r'
+	}
+	return s;
+};
+//method overriding
+Cat.prototype.get_name = function(){
+	return this.says() + ' ' + this.name + ' ' + this.says();
+};
+
+var myCat = new Cat('Kitty');
+document.writeln(myCat.says());
+document.writeln(myCat.purr(5));
+document.writeln(myCat.get_name());
+
 
