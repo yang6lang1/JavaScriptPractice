@@ -555,3 +555,5 @@ myCat2.get_name = function(){
 document.writeln(myCat2.says());
 document.writeln(myCat2.purr(5));
 document.writeln(myCat2.get_name());
+//This is called differential inheritance. By custimizing a new objeect,
+//we specify the differences from the object on which it is based.
