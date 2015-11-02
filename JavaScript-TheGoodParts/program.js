@@ -521,3 +521,37 @@ document.writeln(myCat.purr(5));
 document.writeln(myCat.get_name());
 
 
+//Prototypal inheritance
+//start by using an object literal to make a useful object:
+var myMammal2 = {
+	name : 'Herb the Mammal2',
+	get_name : function(){
+		return this.name;
+	},
+	says : function(){
+		return this.saying || '';
+	}
+};
+
+//Once we have an object we like, we can make more instances with
+//the Object.create method from Chapter 3. We can then customize
+//the new instances:
+var myCat2 = Object.create(myMammal2);
+myCat2.name = 'KittyCat2';
+myCat2.saying = 'meooowwww';
+myCat2.purr = function(n){
+	var i, s = '';
+	for(i = 0; i < n; i++){
+		if(s){
+			s += '-';	
+		}
+		s += 'raww';	
+	}
+	return s;
+}
+myCat2.get_name = function(){
+	return this.says() + ' ' + this.name + ' ' + this.says();
+};
+document.writeln(myCat2.says());
+document.writeln(myCat2.purr(5));
+document.writeln(myCat2.get_name());
