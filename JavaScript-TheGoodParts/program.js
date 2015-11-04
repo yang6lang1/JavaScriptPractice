@@ -555,5 +555,70 @@ myCat2.get_name = function(){
 document.writeln(myCat2.says());
 document.writeln(myCat2.purr(5));
 document.writeln(myCat2.get_name());
+document.writeln();
 //This is called differential inheritance. By custimizing a new objeect,
 //we specify the differences from the object on which it is based.
+
+
+
+//Functional
+var mammal = function(spec) {
+	var that = {};
+
+	that.get_name = function() {
+		return spec.name;
+	};
+
+	that.says = function(){
+		return spec.saying || '';
+	};
+
+	return that;
+};
+var myMammalFunc = mammal({name : 'HerbFunc'});
+document.writeln(myMammalFunc.get_name());
+document.writeln(myMammalFunc.says());
+
+var cat = function(spec){
+	spec.saying = spec.saying || 'meow';
+	var that = mammal(spec);
+	that.purr = function(n){
+		var i, s = '';
+		for(i = 0; i < n; i++){
+			if(s){
+				s += '-';	
+			}
+			s += 'rrrraw';	
+		}
+		return s;
+	};
+	that.get_name = function(){
+		return that.says() + ' ' + spec.name + ' ' + that.says();
+	}
+	return that;
+}
+var myCatFunc = cat({name: 'KittyFunc'});
+document.writeln(myCatFunc.get_name());
+document.writeln(myCatFunc.purr(4));
+document.writeln(myCatFunc.says());
+
+//The functional pattern also gives us a way to deal with super methods
+//We will make a superior method that takes a method name and returns
+//a function that invokes that method. The function will invoke the
+//original method even if the property is changes:
+Object.method('superior',function(name){
+	var that = this, method = that[name];
+	return function(){
+		return method.apply(that.arguments);
+	};
+});
+var coolcat = function(spec){
+	var that = cat(spec),
+		super_get_name = that.superior('get_name');
+		that.get_name = function(){
+			return 'like ' + super_get_name() + ' baby';
+		};
+		return that;
+};
+var myCoolCat = coolcat({name : 'Jinx'});
+document.writeln(myCoolCat.get_name());
