@@ -650,7 +650,7 @@ var eventuality = function(that) {
 				//array of parameters. If the method is a name, look
 				//up the function
 				func = handler.method;
-				if(typeof func = 'string'){
+				if(typeof func === 'string'){
 					func = this[func];
 				}
 
@@ -682,3 +682,71 @@ var eventuality = function(that) {
 
 	return that;
 };
+document.writeln();
+
+
+
+
+//Chapter 6: Arrays
+//Array Literals:
+var empty = [];
+var numbers = ['zero','one','two','three'];
+document.writeln(empty[1]);
+document.writeln(numbers[1]);
+document.writeln(empty.length);
+document.writeln(numbers.length);
+
+
+//In most languages, the elements of an array all required to be
+//of the same type. JS allows an array to contain any misture of values
+var misc = ['string', 98.6, true, false, null, undefined,
+			['nested','array'],{object: true}, NaN, Infinity];
+document.writeln(misc.length);
+
+//the length property is the largest integer property name in the
+//array plus one. This is not necessarily the number of properties
+//in the array:
+var myArray = [];
+document.writeln(myArray.length);
+myArray[10]=true;
+document.writeln(myArray.length);
+
+//Add elements to the end of the array
+numbers[numbers.length] = 'newNumber';
+numbers.push('go');
+for(var i = 0; i < numbers.length; i++){
+	document.writeln(numbers[i]);
+}
+document.writeln();
+//delete elements from array
+delete numbers[2];
+for(var i = 0; i < numbers.length; i++){
+	document.writeln(numbers[i]);
+}
+numbers[2] = 'two';
+document.writeln();
+//Use Array.splice() method to add/remove elements from array
+numbers.splice(2,1);
+for(var i = 0; i < numbers.length; i++){
+	document.writeln(numbers[i]);
+}
+document.writeln();
+numbers.splice(2,0,'abother number')
+for(var i = 0; i < numbers.length; i++){
+	document.writeln(numbers[i]);
+}
+document.writeln();
+
+//Confusion
+//Create our own method to determine if an array is an array
+var is_array = function(value){
+	return value &&
+			typeof value === 'object' &&
+			typeof value.length === 'number' &&
+			typeof value.splice === 'function' &&
+			!(value.propertyIsEnumerable('length'));
+
+/*Every object has a propertyIsEnumerable method. This method can determine whether the specified property in an object can be enumerated by a for...in loop, with the exception of properties inherited through the prototype chain. If the object does not have the specified property, this method returns false.*/
+
+};
+
