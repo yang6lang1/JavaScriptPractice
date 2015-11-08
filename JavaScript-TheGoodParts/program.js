@@ -747,6 +747,77 @@ var is_array = function(value){
 			!(value.propertyIsEnumerable('length'));
 
 /*Every object has a propertyIsEnumerable method. This method can determine whether the specified property in an object can be enumerated by a for...in loop, with the exception of properties inherited through the prototype chain. If the object does not have the specified property, this method returns false.*/
-
 };
 
+//Methods
+//Augmentig array's prototype
+Array.method('reduce',function(f, value){
+	for (var i = 0; i < this.length; i++){
+		value = f(this[i], value);
+	}
+	return value;
+});
+
+//Create an array of numbers:
+var data = [4, 8, 15, 16, 23, 42];
+
+//Define two simple functions. One will add two
+//numbers. The other will multiply two numbers.
+var mult = function(a,b){
+	return a * b;
+}
+
+//Invoke the data's reduce method, passing in add function
+var sum = data.reduce(add,0);
+document.writeln(sum);
+var product = data.reduce(mult,1);
+document.writeln(product);
+
+//Because array is really an object, we can add methods directly
+//to an individual array:
+data.total = function(){
+	return this.reduce(add,0);
+};
+document.writeln(data.total());
+document.writeln();
+
+
+//Dimensions:
+Array.dim = function(dimension, initial){
+	var a = [];
+	for (var i = 0; i < dimension; i++){
+		a[i] = initial;
+	}
+	return a;
+}
+
+//Make an array containing 10 zeros.
+var myArray = Array.dim(10,0);
+
+//matrix:
+Array.matrix = function(m, n, initial){
+	var a, mat = [];
+	for(var i = 0; i < m; i++){
+		a=[];
+		for(var j = 0; j < n; j++){
+			a[j] = initial;
+		}
+		mat[i] = a;
+	}
+	return mat;
+};
+
+var myMatrix = Array.matrix(4,4,0);
+document.writeln(myMatrix[3][3]);
+
+//create identity matrix:
+Array.identity= function(n){
+	var i, mat = Array.matrix(n, n, 0);
+	for(i = 0; i < n; i++){
+		mat[i][i] = 1;
+	}
+	return mat;
+};
+
+myMatrix= Array.identity(4);
+document.writeln(myMatrix[3][3]);
