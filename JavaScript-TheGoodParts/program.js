@@ -821,3 +821,10 @@ Array.identity= function(n){
 
 myMatrix= Array.identity(4);
 document.writeln(myMatrix[3][3]);
+document.writeln();
+
+
+
+//I will skip regular expression chapter for now
+//Go straight to chapter 8: Methods
+
