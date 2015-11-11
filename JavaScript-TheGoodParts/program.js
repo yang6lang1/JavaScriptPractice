@@ -827,4 +827,15 @@ document.writeln();
 
 //I will skip regular expression chapter for now
 //Go straight to chapter 8: Methods
+//Chapter 8: Methods
+//concatenate array:
+var a = ['a','b','c'];
+var b = ['d','e','f'];
+var c = a.concat(b, true);
+document.writeln(c);
+//c = a b c d e f true
 
+//array.join method makes a string from an array.
+a.push('d');
+var c = a.join('');
+document.writeln(c);
