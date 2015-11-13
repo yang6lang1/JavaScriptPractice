@@ -839,3 +839,45 @@ document.writeln(c);
 a.push('d');
 var c = a.join('');
 document.writeln(c);
+
+//The pop and push methods make an array work like a stack
+Array.method('pop', function(){
+	return this.splice(this.length-1, 1)[0]; //splice returns an array
+});
+
+c = a.pop();
+document.writeln(c);
+
+//push method: ***** Important *****
+Array.method('push',function(){
+	this.splice.apply(this, //slice method returns a shallow copy of an array
+		[this.length, 0].concat(Array.prototype.slice.apply(argiments)));
+	return this.length;
+});
+var a = ['a','b','c'];
+var b = ['d','e','f','g'];
+var c = a.push(b,true);
+document.writeln(a);
+document.writeln();
+
+//Reversing array:
+var a = ['a','b','c','kaka'];
+var b = a.reverse();
+document.writeln(b);
+document.writeln();
+
+//array.shift(). The shift method removes the first element 
+//from an array and returns it. If array is empty, it returns
+//undefined. ***Shift is usually much slower than pop***
+var a = ['a','b','c','kaka'];
+var b = a.shift();
+document.writeln(b);
+document.writeln(a);
+document.writeln();
+//Shift can be implemented like this:
+Array.method('shift',function(){
+	return this.splice(0,1)[0];
+});
+
+
+
